@@ -20,6 +20,8 @@
 Adds a week number column to the calendar flyout that opens when you click the
 clock in the Windows 11 taskbar, like the week numbers in Outlook.
 
+![Calendar flyout with week numbers](https://raw.githubusercontent.com/Maveric2005/windhawk-calendar-week-numbers/main/images/screenshot.png)
+
 ## Settings
 
 - **Week numbering**: ISO 8601 (default; used in Germany and most of Europe)
@@ -58,10 +60,13 @@ clock in the Windows 11 taskbar, like the week numbers in Outlook.
   - text: Text color
 - columnWidth: 24
   $name: Column width
+  $description: In pixels, 10 to 60
 - fontSize: 11
   $name: Font size
+  $description: 6 to 30
 - opacity: 100
   $name: Opacity (percent)
+  $description: 5 to 100
 */
 // ==/WindhawkModSettings==
 
@@ -95,40 +100,6 @@ namespace wuc = winrt::Windows::UI::Core;
 namespace wux = winrt::Windows::UI::Xaml;
 namespace wuxc = winrt::Windows::UI::Xaml::Controls;
 namespace wuxm = winrt::Windows::UI::Xaml::Media;
-
-#ifdef DEV_LOG
-// Development builds also log to a file: ShellExperienceHost runs in an app
-// container, so its debug output doesn't reach a regular debug viewer.
-#include <cstdarg>
-#include <cstdio>
-std::mutex g_devLogMutex;
-void DevLog(PCWSTR format, ...) {
-    WCHAR buffer[1024];
-    va_list args;
-    va_start(args, format);
-    _vsnwprintf_s(buffer, ARRAYSIZE(buffer), _TRUNCATE, format, args);
-    va_end(args);
-    Wh_Log(L"%s", buffer);
-
-    WCHAR path[MAX_PATH];
-    if (!Wh_GetModStoragePath(path, ARRAYSIZE(path))) {
-        return;
-    }
-    CreateDirectory(path, nullptr);
-    wcscat_s(path, L"\\dev.log");
-    std::lock_guard lock(g_devLogMutex);
-    if (FILE* f = _wfopen(path, L"a, ccs=UTF-8")) {
-        SYSTEMTIME st;
-        GetLocalTime(&st);
-        fwprintf(f, L"%02d:%02d:%02d.%03d %u/%u %s\n", st.wHour, st.wMinute,
-                 st.wSecond, st.wMilliseconds, GetCurrentProcessId(),
-                 GetCurrentThreadId(), buffer);
-        fclose(f);
-    }
-}
-#undef Wh_Log
-#define Wh_Log DevLog
-#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 // Settings

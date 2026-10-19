@@ -49,11 +49,7 @@ included as well because some builds host the flyout there.
 ## Building and testing
 
 There's nothing to build outside Windhawk. Windhawk compiles the single
-`.wh.cpp` file with its bundled Clang. Compile with `-DDEV_LOG` to make the
-mod also write its log to
-`C:\ProgramData\Windhawk\Engine\ModsWritable\mod-storage\<mod id>\dev.log`.
-ShellExperienceHost runs in an app container, so its debug output doesn't
-reach a regular debug viewer.
+`.wh.cpp` file with its bundled Clang.
 
 ## License
 
