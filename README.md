@@ -43,8 +43,7 @@ week number is computed from the date of the row's first day.
 The day cells keep their size, so their horizontal margin is reduced to make
 them fit the narrower columns.
 
-Tested on Windows 11 build 26220 with Windhawk 1.7.3. `ShellHost.exe` is
-included as well because some builds host the flyout there.
+Tested on Windows 11 build 26220 with Windhawk 1.7.3.
 
 ## Building and testing
 
